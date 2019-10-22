@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# rubocop:disable Style/LineLength, Style/StringLiterals
 
 module Enumerable
   def my_each
@@ -61,7 +60,7 @@ module Enumerable
 
   def my_map(proc = nil)
     return .to_enum unless block_given?
-    
+
     arr = []
     if proc
       my_each { |x| arr.push(proc.call(x)) }
@@ -84,6 +83,6 @@ module Enumerable
   def multiply_els(arr)
     return .to_enum unless block_given?
 
-    arr.my_inject { |x, num| x *= num }
+    arr.my_inject { |x, num| x * num }
   end
 end
