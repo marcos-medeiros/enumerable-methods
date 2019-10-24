@@ -2,20 +2,20 @@
 
 module Enumerable
   def my_each
-    return .to_enum unless block_given?
+    return to_enum(:my_each) unless block_given?
 
     length.times { |i| yield(self[i]) }
     self
   end
 
   def my_each_with_index
-    return .to_enum unless block_given?
+    return to_enum(:my_each_with_index) unless block_given?
 
     length.times { |i| yield(self[i], i) }
   end
 
   def my_select
-    return .to_enum unless block_given?
+    return to_enum(:my_select) unless block_given?
 
     arr = []
     my_each { |i| yield(i) ? arr.push(i) : i }
@@ -23,7 +23,7 @@ module Enumerable
   end
 
   def my_all?
-    return .to_enum unless block_given?
+    return my_all? { |obj| obj } unless block_given?
 
     my_each do |i|
       case yield i
@@ -35,7 +35,7 @@ module Enumerable
   end
 
   def my_any?
-    return .to_enum unless block_given?
+    return my_any? { |obj| obj } unless block_given?
 
     my_each do |i|
       case yield i
@@ -47,19 +47,25 @@ module Enumerable
   end
 
   def my_none?
-    return .to_enum unless block_given?
-
     (my_any? { |i| yield(i) == true }) != true
   end
 
-  def my_count
-    return .to_enum unless block_given?
+  def my_count(arg = nil)
+    return length(:my_count) unless block_given? && arg.nil?
 
-    my_each_with_index { |_n, i| i + 1 }
+    if !block_given? && !arg.nil?
+      count_arr = []
+      my_each(:my_count) { |x| count_arr << x unless x != arg }
+      count_arr.length
+
+    elsif block_given? && arg.nil?
+      count_arr = my_select(:my_count) { |x| yield(x) }
+      count_arr.length
+    end
   end
 
   def my_map(proc = nil)
-    return .to_enum unless block_given?
+    return to_enum(:my_map) unless block_given?
 
     arr = []
     if proc
@@ -71,7 +77,7 @@ module Enumerable
   end
 
   def my_inject
-    return .to_enum unless block_given?
+    return 'no block given' unless block_given?
 
     x = shift
     y = x
@@ -81,7 +87,7 @@ module Enumerable
   end
 
   def multiply_els(arr)
-    return .to_enum unless block_given?
+    return to_enum(:multiply_els) unless block_given?
 
     arr.my_inject { |x, num| x * num }
   end
