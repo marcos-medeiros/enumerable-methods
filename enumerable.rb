@@ -49,6 +49,19 @@ module Enumerable
     end
     counts
   end
+
+  def my_map(*args)
+    mapped = []
+    if args.empty?
+      my_each { |v| mapped << yield(v) } unless is_a? Hash
+      my_each { |k, v| mapped << yield(k, v) }
+    else
+      proc = args[0]
+      my_each { |v| mapped << proc.call(v) } unless is_a? Hash
+      my_each { |k, v| mapped << proc.call(k, v) }
+    end
+    mapped
+  end
 end
 
 # rubocop:enable Metrics/PerceivedComplexity
