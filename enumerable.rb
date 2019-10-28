@@ -156,7 +156,7 @@ module Enumerable
     true
   end
 
-  # Auxiliary methods
+  # Auxiliary methods for my_all?, my_none? and my_any? methods
 
   def class_member_pair(_obj1, _obj2, class_type)
     obj1.is_a?(class_type) && obj2.is_a?(class_type)
