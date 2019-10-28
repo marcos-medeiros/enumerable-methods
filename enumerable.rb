@@ -30,4 +30,19 @@ module Enumerable
     my_each { |v| selection << v if yield v }
     selected
   end
+
+  def my_count(*args)
+    counts = 0
+    unless args.empty?
+      arg = args[0]
+      return counter if is_a? Hash
+
+      my_each { |x| counts += 1 if x == arg }
+    end
+    if args.positive?
+      my_each { |x| counts += 1 if yield x } if block_given?
+      return length unless block_given?
+    end
+    counts
+  end
 end
