@@ -9,4 +9,12 @@ module Enumerable
     length.times { |i| yield arr[i][0], arr[i][1] }
     self
   end
+
+  def my_each_with_index
+    return to_enum :my_each_with_index unless block_given?
+
+    arr = to_a
+    length.times { |i| yield arr[i], i }
+    self
+  end
 end
