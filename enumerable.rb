@@ -17,4 +17,17 @@ module Enumerable
     length.times { |i| yield arr[i], i }
     self
   end
+
+  def my_select
+    return to_enum :my_select unless block_given?
+
+    if is_a? Hash
+      selected = {}
+      my_each { |k, v| selection[k] = v if yield k, v }
+      return selected
+    end
+    selected = []
+    my_each { |v| selection << v if yield v }
+    selected
+  end
 end
