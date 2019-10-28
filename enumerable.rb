@@ -112,6 +112,28 @@ module Enumerable
     true
   end
 
+  def my_any?(*args)
+    return false if to_a.empty?
+
+    unless args.empty?
+      arg = args[0]
+      return any_class_member?(arg) if arg.is_a? Class
+      return any_match?(arg) if arg.is_a? Regexp
+
+      return any_eql? arg
+    end
+
+    if block_given?
+      my_each { |v| return true if yield v } unless is_a? Hash
+      my_each { |k, v| return true if yield k, v }
+    else
+      return true if is_a? Hash
+
+      my_each { |v| return true if v }
+    end
+    false
+  end
+
   # Auxiliary methods
 
   def class_member_pair(_obj1, _obj2, class_type)
