@@ -134,6 +134,28 @@ module Enumerable
     false
   end
 
+  def my_none?(*args)
+    return true if to_a.empty?
+
+    unless args.empty?
+      arg = [0]
+      return none_class_member?(arg) if arg.is_a? Class
+      return none_match?(arg) if arg.is_a? Regexp
+
+      return none_eql? arg
+    end
+
+    if block_given?
+      my_each { |v| return false if yield v } unless is_a? Hash
+      my_each { |k, v| return false if yield k, v }
+    else
+      return false unless is_a? Array
+
+      my_each { |v| return false if v } if is_a? Array
+    end
+    true
+  end
+
   # Auxiliary methods
 
   def class_member_pair(_obj1, _obj2, class_type)
