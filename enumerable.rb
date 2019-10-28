@@ -62,6 +62,29 @@ module Enumerable
     end
     mapped
   end
+
+  def my_inject(*args)
+    arr = to_a
+    case args.length
+    when 0
+      output = arr[0]
+      arr.my_each_with_index { |x, i| output = yield(output, x) unless i.zero? }
+    when 1
+      if args[0].is_a? Integer
+        output = args[0]
+        arr.my_each { |x| output = yield(output, x) }
+        return output
+      end
+      output = arr[0]
+      action = args[0]
+      arr.my_each_with_index { |x, i| output = output.method(action).call(x) unless i.zero? }
+    when 2
+      output = args[0]
+      action = args[1]
+      arr.my_each { |x| output = output.method(action).call(x) }
+    end
+    output
+  end
 end
 
 # rubocop:enable Metrics/PerceivedComplexity
