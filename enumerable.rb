@@ -4,6 +4,8 @@
 
 # rubocop:disable Metrics/CyclomaticComplexity
 
+# rubocop:disable Metrics/ModuleLength
+
 module Enumerable
   def my_each
     return to_enum :my_each unless block_given?
@@ -90,6 +92,26 @@ module Enumerable
     arr.my_inject(:*)
   end
 
+  def my_all?(*args)
+    return true if to_a.empty?
+
+    unless args.empty?
+      arg = args[0]
+      return all_class_member?(arg) if arg.is_a? Class
+      return check_match(arg) if arg.is_a? Regexp
+
+      return all_eql? arg
+    end
+
+    if block_given?
+      my_each { |v| return false unless yield v } unless is_a? Hash
+      my_each { |k, v| return false unless yield k, v }
+    else
+      is_a?(Array) ? my_each { |v| return false unless v } : true
+    end
+    true
+  end
+
   # Auxiliary methods
 
   def class_member_pair(_obj1, _obj2, class_type)
@@ -149,3 +171,5 @@ end
 # rubocop:enable Metrics/PerceivedComplexity
 
 # rubocop:enable Metrics/CyclomaticComplexity
+
+# rubocop:enable Metrics/ModuleLength
