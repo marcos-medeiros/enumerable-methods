@@ -89,6 +89,61 @@ module Enumerable
   def multiply_els(arr)
     arr.my_inject(:*)
   end
+
+  # Auxiliary methods
+
+  def class_member_pair(_obj1, _obj2, class_type)
+    obj1.is_a?(class_type) && obj2.is_a?(class_type)
+  end
+
+  def all_class_member?(class_type)
+    if is_a? Hash
+      my_each { |k, v| return false unless class_member_pair(k, v, class_type) }
+    else
+      my_each { |v| return false unless v.is_a? class_type }
+    end
+    true
+  end
+
+  def none_class_member?(class_type)
+    my_each { |x| return false if x.is_a? class_type } unless is_a? Hash
+    true
+  end
+
+  def any_class_member?(class_type)
+    my_each { |x| return true if x.is_a? class_type }
+    false
+  end
+
+  def all_eql?(other)
+    my_each { |x| return false unless x == other }
+    true
+  end
+
+  def any_eql?(object)
+    my_each { |x| return true if x == object }
+    false
+  end
+
+  def none_eql?(object)
+    my_each { |x| return false if x == object } unless is_a? Hash
+    true
+  end
+
+  def check_match(regex)
+    my_each { |x| return false unless x.match(regex) }
+    true
+  end
+
+  def any_match?(regex)
+    my_each { |x| return true if regex.match(x) }
+    false
+  end
+
+  def no_match?(regex)
+    my_each { |x| return false if x.match(regex) } if is_a? Array
+    true
+  end
 end
 
 # rubocop:enable Metrics/PerceivedComplexity
