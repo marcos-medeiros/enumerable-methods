@@ -52,7 +52,7 @@ RSpec.describe Enumerable do
       expect([1, '3.14', 42].my_none?(Float)).to eql(true)
     end
     it 'when a Regex is passed as an argument returns true only if none of the collection matches the Regex' do
-      expect(%w{ant bear cat}.my_none?(/d/)).to eql(true)
+      expect(%w[ant bear cat].my_none?(/d/)).to eql(true)
     end
     it 'when a pattern other than Regex or a Class is given returns true only if none of the collection matches the pattern' do
       expect(%w[ant bear cat].my_none? { |word| word.length == 5 }).to eql(true)
