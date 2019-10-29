@@ -32,13 +32,30 @@ RSpec.describe Enumerable do
       expect([nil, true, false].my_any?).to eql(true)
     end
     it 'when a class is passed as an argument returns true if at least one of the collection is a member of such class' do
-      expect([nil, true, 99].any?(Integer)).to eql(true)
+      expect([nil, true, 99].my_any?(Integer)).to eql(true)
     end
     it 'when a Regex is passed as an argument returns false if none of the collection matches the Regex' do
-      expect(%w[ant bear cat].any?(/d/)).to eql(false)
+      expect(%w[ant bear cat].my_any?(/d/)).to eql(false)
     end
     it 'when a pattern other than Regex or a Class is given returns false if none of the collection matches the pattern' do
-      expect(%w[ant bear cat].any? { |word| word.length >= 5 }).to eql(false)
+      expect(%w[ant bear cat].my_any? { |word| word.length >= 5 }).to eql(false)
+    end
+  end
+  describe '#my_none?' do
+    it 'when no block or argument is given returns true only if none of the collection members is true' do
+      expect([].my_none?).to eql(true)
+    end
+    it 'return true only if none of the collection members are true' do
+      expect([nil, true, false].my_none?).to eql(false)
+    end
+    it 'when a class is passed as an argument returns true only if none of the collection is a member of such class' do
+      expect([1, '3.14', 42].my_none?(Float)).to eql(true)
+    end
+    it 'when a Regex is passed as an argument returns true only if none of the collection matches the Regex' do
+      expect(%w{ant bear cat}.my_none?(/d/)).to eql(true)
+    end
+    it 'when a pattern other than Regex or a Class is given returns true only if none of the collection matches the pattern' do
+      expect(%w[ant bear cat].my_none? { |word| word.length == 5 }).to eql(true)
     end
   end
 end
