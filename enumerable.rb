@@ -49,17 +49,24 @@ module Enumerable
     count
   end
 
-  def my_map(*args)
-    mapped = []
-    if args.empty?
-      my_each { |v| mapped << yield(v) } unless is_a? Hash
-      my_each { |k, v| mapped << yield(k, v) } if is_a? Hash
-    else
-      proc = args[0]
-      my_each { |v| mapped << proc.call(v) } unless is_a? Hash
-      my_each { |k, v| mapped << proc.call(k, v) } if is_a? Hash
+  def my_map(proc = nil)
+    if self.class == Array
+      temp = []
+      if proc.is_a? Proc
+        my_each { |a| temp.push(proc.call(a)) }
+      else
+        my_each { |a| temp.push(yield(a)) }
+      end
+      temp
+    elsif self.class == Hash
+      temp = {}
+      if proc.is_a? Proc
+        my_each { |a, b| temp[a] = proc.call(a, b) }
+      else
+        my_each { |a, b| temp[a] = yield(a, b) }
+      end
+      temp
     end
-    mapped
   end
 
   def my_inject(*args)
