@@ -45,10 +45,10 @@ module Enumerable
 
       my_each { |x| counts += 1 if x == arg }
     end
-    if args.positive?
-      my_each { |x| counts += 1 if yield x } if block_given?
-      return length unless block_given?
-    end
+    return length unless block_given?
+
+    my_each { |x| counts += 1 if yield x } if block_given?
+
     counts
   end
 

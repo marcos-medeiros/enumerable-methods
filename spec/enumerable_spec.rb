@@ -83,6 +83,14 @@ RSpec.describe Enumerable do
       expect([1, 2, 3, 4, 5].my_select(&:even?)).to eql([1, 2, 3, 4, 5].select(&:even?))
     end
   end
+  describe '#my_count' do
+    it 'when no block or argument is given returns the length of enum' do
+      expect([1, 2, 3, 4, 2, 5].my_count).to eql(6)
+    end
+    it ' If an argument is given, the number of items in enum that are equal to item are counted' do
+      expect([1, 2, 3, 4, 2, 5].my_count(2)).to eql([1, 2, 3, 4, 2, 5].count(2))
+    end
+  end
 end
 
 # rubocop:enable Metrics/LineLength
