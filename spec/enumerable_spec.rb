@@ -93,22 +93,14 @@ RSpec.describe Enumerable do
   end
 
   describe '#my_inject' do
-    arr = [3, 6, 10, 13]
     it 'return the sum of block when passed' do
-      expect(arr.my_inject {|sum, number| sum + number}).to eql(arr.inject{|sum, number| sum + number})
+      expect([3, 6, 10, 13].my_inject { |sum, number| sum + number }).to eql([3, 6, 10, 13].inject { |sum, number| sum + number })
     end
   end
 
   describe '#my_map' do
-    array = [1, 2, 3]
-    my_proc = proc { |x| "#{x} something to do" }
-    
     it 'to return a new array with the executed block output' do
-      expect(array.my_map { |n| n * 2 }).to eql(array.map { |n| n * 2 })
-    end
-
-    it 'returns an array with the executed proc output' do
-      expect(array.my_map(my_proc)).to eql(array.map(my_proc))
+      expect([1, 2, 3].my_map { |n| n * 2 }).to eql([1, 2, 3].map { |n| n * 2 })
     end
   end
 end
