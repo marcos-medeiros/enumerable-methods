@@ -37,19 +37,16 @@ module Enumerable
     selected
   end
 
-  def my_count(*args)
-    counts = 0
-    unless args.empty?
-      arg = args[0]
-      return counter if is_a? Hash
-
-      my_each { |x| counts += 1 if x == arg }
+  def my_count(item = nil)
+    count = 0
+    if block_given?
+      my_each { |item_| count += 1 if yield(item_) }
+    elsif item
+      my_each { |item_| count += 1 if item_ == item }
+    else
+      count = length
     end
-    return length unless block_given?
-
-    my_each { |x| counts += 1 if yield x } if block_given?
-
-    counts
+    count
   end
 
   def my_map(*args)
