@@ -58,6 +58,14 @@ RSpec.describe Enumerable do
       expect(%w[ant bear cat].my_none? { |word| word.length == 5 }).to eql(true)
     end
   end
+  describe '#my_each' do
+    it 'when no block or argument is given returns an enumerator' do
+      expect([1..10].my_each).to be_a(Enumerator)
+    end
+    it 'Iterates the given block trough each item' do
+      expect([1, 5, 10].my_each(&:to_s)).to eql([1, 5, 10].each(&:to_s))
+    end
+  end
 end
 
 # rubocop:enable Metrics/LineLength

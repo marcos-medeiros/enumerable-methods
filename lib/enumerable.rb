@@ -12,7 +12,7 @@ module Enumerable
 
     arr = to_a
     length.times { |i| yield arr[i] } unless is_a? Hash
-    length.times { |i| yield arr[i][0], arr[i][1] }
+    length.times { |i| yield arr[i][0], arr[i][1] } if is_a? Hash
     self
   end
 
@@ -56,11 +56,11 @@ module Enumerable
     mapped = []
     if args.empty?
       my_each { |v| mapped << yield(v) } unless is_a? Hash
-      my_each { |k, v| mapped << yield(k, v) }
+      my_each { |k, v| mapped << yield(k, v) } if is_a? Hash
     else
       proc = args[0]
       my_each { |v| mapped << proc.call(v) } unless is_a? Hash
-      my_each { |k, v| mapped << proc.call(k, v) }
+      my_each { |k, v| mapped << proc.call(k, v) } if is_a? Hash
     end
     mapped
   end
@@ -105,7 +105,7 @@ module Enumerable
 
     if block_given?
       my_each { |v| return false unless yield v } unless is_a? Hash
-      my_each { |k, v| return false unless yield k, v }
+      my_each { |k, v| return false unless yield k, v } if is_a? Hash
     else
       is_a?(Array) ? my_each { |v| return false unless v } : true
     end
@@ -125,7 +125,7 @@ module Enumerable
 
     if block_given?
       my_each { |v| return true if yield v } unless is_a? Hash
-      my_each { |k, v| return true if yield k, v }
+      my_each { |k, v| return true if yield k, v } if is_a? Hash
     else
       return true if is_a? Hash
 
@@ -147,7 +147,7 @@ module Enumerable
 
     if block_given?
       my_each { |v| return false if yield v } unless is_a? Hash
-      my_each { |k, v| return false if yield k, v }
+      my_each { |k, v| return false if yield k, v } if is_a? Hash
     else
       return false unless is_a? Array
 
