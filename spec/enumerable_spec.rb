@@ -66,6 +66,15 @@ RSpec.describe Enumerable do
       expect([1, 5, 10].my_each(&:to_s)).to eql([1, 5, 10].each(&:to_s))
     end
   end
+  describe '#my_each_with_index' do
+    it 'when no block or argument is given returns an enumerator' do
+      expect([1..10].my_each_with_index).to be_a(Enumerator)
+    end
+    it 'Iterates the given block trough each item and respective index' do
+      hash = {}
+      expect(%w[cat dog wombat].my_each_with_index { |x, y| hash[x] = y }).to eql(%w[cat dog wombat].each_with_index { |x, y| hash[x] = y })
+    end
+  end
 end
 
 # rubocop:enable Metrics/LineLength
