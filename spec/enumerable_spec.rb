@@ -75,6 +75,14 @@ RSpec.describe Enumerable do
       expect(%w[cat dog wombat].my_each_with_index { |x, y| hash[x] = y }).to eql(%w[cat dog wombat].each_with_index { |x, y| hash[x] = y })
     end
   end
+  describe '#my_select' do
+    it 'when no block or argument is given returns an enumerator' do
+      expect([1..10].my_select).to be_a(Enumerator)
+    end
+    it 'Returns an array containing all elements of enum for which the given block returns a true value.' do
+      expect([1, 2, 3, 4, 5].my_select(&:even?)).to eql([1, 2, 3, 4, 5].select(&:even?))
+    end
+  end
 end
 
 # rubocop:enable Metrics/LineLength

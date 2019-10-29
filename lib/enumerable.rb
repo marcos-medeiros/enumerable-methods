@@ -29,11 +29,11 @@ module Enumerable
 
     if is_a? Hash
       selected = {}
-      my_each { |k, v| selection[k] = v if yield k, v }
+      my_each { |k, v| selected[k] = v if yield k, v }
       return selected
     end
     selected = []
-    my_each { |v| selection << v if yield v }
+    my_each { |v| selected << v if yield v }
     selected
   end
 
