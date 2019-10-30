@@ -92,10 +92,6 @@ module Enumerable
     output
   end
 
-  def multiply_els(arr)
-    arr.my_inject(:*)
-  end
-
   def my_all?(*args)
     return true if to_a.empty?
 
