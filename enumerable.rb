@@ -146,8 +146,8 @@ module Enumerable
     end
 
     if block_given?
-      my_each { |v| return false if yield v } unless is_a? Hash
-      my_each { |k, v| return false if yield k, v } if is_a? Hash
+      my_each { |v| return false if yield v } if is_a? Hash
+      my_each { |k, v| return false if yield k, v } unless is_a? Hash
     else
       return false unless is_a? Array
 
