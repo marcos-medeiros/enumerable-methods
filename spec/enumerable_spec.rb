@@ -49,7 +49,7 @@ RSpec.describe Enumerable do
       expect([nil, true, false].my_none?).to eql(false)
     end
     it 'when a class is passed as an argument returns true only if none of the collection is a member of such class' do
-      expect([1, '3.14', 42].my_none?(Float)).to eql(true)
+      expect([1, 3.14, 42].my_none?(Float)).to eql(false)
     end
     it 'when a Regex is passed as an argument returns true only if none of the collection matches the Regex' do
       expect(%w[ant bear cat].my_none?(/d/)).to eql(true)
@@ -95,6 +95,12 @@ RSpec.describe Enumerable do
   describe '#my_inject' do
     it 'return the sum of block when passed' do
       expect([3, 6, 10, 13].my_inject { |sum, number| sum + number }).to eql([3, 6, 10, 13].inject { |sum, number| sum + number })
+    end
+  end
+
+  describe '#multiply_els' do
+    it 'multiplies all the elements of the array together' do
+      expect(multiply_els([2, 4, 5])).to eql(40)
     end
   end
 

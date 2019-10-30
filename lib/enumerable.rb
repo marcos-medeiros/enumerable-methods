@@ -92,10 +92,6 @@ module Enumerable
     output
   end
 
-  def multiply_els(arr)
-    arr.my_inject(:*)
-  end
-
   def my_all?(*args)
     return true if to_a.empty?
 
@@ -138,26 +134,8 @@ module Enumerable
     false
   end
 
-  def my_none?(*args)
-    return true if to_a.empty?
-
-    unless args.empty?
-      arg = [0]
-      return none_class_member?(arg) if arg.is_a? Class
-      return none_match?(arg) if arg.is_a? Regexp
-
-      return none_eql? arg
-    end
-
-    if block_given?
-      my_each { |v| return false if yield v } unless is_a? Hash
-      my_each { |k, v| return false if yield k, v } if is_a? Hash
-    else
-      return false unless is_a? Array
-
-      my_each { |v| return false if v } if is_a? Array
-    end
-    true
+  def my_none?(arg = nil, &block)
+    !my_any?(arg, &block)
   end
 
   # Auxiliary methods for my_all?, my_none? and my_any? methods
@@ -172,11 +150,6 @@ module Enumerable
     else
       my_each { |v| return false unless v.is_a? class_type }
     end
-    true
-  end
-
-  def none_class_member?(class_type)
-    my_each { |x| return false if x.is_a? class_type } unless is_a? Hash
     true
   end
 
@@ -195,11 +168,6 @@ module Enumerable
     false
   end
 
-  def none_eql?(object)
-    my_each { |x| return false if x == object } unless is_a? Hash
-    true
-  end
-
   def check_match(regex)
     my_each { |x| return false unless x.match(regex) }
     true
@@ -209,11 +177,10 @@ module Enumerable
     my_each { |x| return true if regex.match(x) }
     false
   end
+end
 
-  def no_match?(regex)
-    my_each { |x| return false if x.match(regex) } if is_a? Array
-    true
-  end
+def multiply_els(arr)
+  arr.my_inject(:*)
 end
 
 # rubocop:enable Metrics/PerceivedComplexity
