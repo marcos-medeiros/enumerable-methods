@@ -49,24 +49,12 @@ module Enumerable
     count
   end
 
-  def my_map(proc = nil)
-    if self.class == Array
-      temp = []
-      if proc.is_a? Proc
-        my_each { |a| temp.push(proc.call(a)) }
-      else
-        my_each { |a| temp.push(yield(a)) }
-      end
-      temp
-    elsif self.class == Hash
-      temp = {}
-      if proc.is_a? Proc
-        my_each { |a, b| temp[a] = proc.call(a, b) }
-      else
-        my_each { |a, b| temp[a] = yield(a, b) }
-      end
-      temp
-    end
+  def my_map
+    return to_enum unless block_given?
+
+    array = []
+    my_each { |i| array << yield(i) }
+    array
   end
 
   def my_inject(*args)
