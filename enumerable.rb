@@ -92,10 +92,6 @@ module Enumerable
     output
   end
 
-  def multiply_els(arr)
-    arr.my_inject(:*)
-  end
-
   def my_all?(*args)
     return true if to_a.empty?
 
@@ -214,6 +210,10 @@ module Enumerable
     my_each { |x| return false if x.match(regex) } if is_a? Array
     true
   end
+end
+
+def multiply_els(arr)
+  arr.my_inject { |product, current| product * current }
 end
 
 # rubocop:enable Metrics/PerceivedComplexity
