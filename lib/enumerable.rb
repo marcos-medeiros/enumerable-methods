@@ -135,12 +135,6 @@ module Enumerable
     true
   end
 
-  def matchers?(obj, pattern)
-    (obj.respond_to?(:eql?) && obj.eql?(pattern)) ||
-      (pattern.is_a?(Class) && obj.is_a?(pattern)) ||
-      (pattern.is_a?(Regexp) && pattern.match(obj))
-  end
-
   # Auxiliary methods for my_all?, my_none? and my_any? methods
 
   def class_member_pair(_obj1, _obj2, class_type)
@@ -180,6 +174,13 @@ module Enumerable
     my_each { |x| return true if regex.match(x) }
     false
   end
+
+  def matchers?(obj, pattern)
+    (obj.respond_to?(:eql?) && obj.eql?(pattern)) ||
+      (pattern.is_a?(Class) && obj.is_a?(pattern)) ||
+      (pattern.is_a?(Regexp) && pattern.match(obj))
+  end
+
 end
 
 def multiply_els(arr)
