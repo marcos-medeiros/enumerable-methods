@@ -180,7 +180,6 @@ module Enumerable
       (pattern.is_a?(Class) && obj.is_a?(pattern)) ||
       (pattern.is_a?(Regexp) && pattern.match(obj))
   end
-
 end
 
 def multiply_els(arr)
