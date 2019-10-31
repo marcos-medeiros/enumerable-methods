@@ -122,8 +122,11 @@ module Enumerable
     false
   end
 
-  def my_none?(arg = nil, &block)
-    !my_any?(arg, &block)
+  def my_none?
+    return false unless block_given?
+
+    my_each { |element| return false if yield(element) == true }
+    true
   end
 
   # Auxiliary methods for my_all?, my_none? and my_any? methods
