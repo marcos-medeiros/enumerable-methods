@@ -122,17 +122,23 @@ module Enumerable
     false
   end
 
-  def my_none?
-    return true unless block_given?
-
-    i = 0
-    while c < size
-      return false if yield(self[i])
-
-      i += 1
+  def my_none?(pattern = nil)
+    if block_given?
+      my_each { |obj| return false if yield(obj) }
+    elsif pattern
+      my_each do |obj|
+        return false if matchers?(obj, pattern)
+      end
+    else
+      my_each { |obj| return false if obj }
     end
-
     true
+  end
+
+  def matchers?(obj, pattern)
+    (obj.respond_to?(:eql?) && obj.eql?(pattern)) ||
+      (pattern.is_a?(Class) && obj.is_a?(pattern)) ||
+      (pattern.is_a?(Regexp) && pattern.match(obj))
   end
 
   # Auxiliary methods for my_all?, my_none? and my_any? methods
