@@ -122,10 +122,16 @@ module Enumerable
     false
   end
 
-  def my_none?
-    return false unless block_given?
-
-    my_each { |element| return false if yield(element) == true }
+  def my_none?(pattern = nil)
+    if block_given?
+      my_each { |obj| return false if yield(obj) }
+    elsif pattern
+      my_each do |obj|
+        return false if matchers?(obj, pattern)
+      end
+    else
+      my_each { |obj| return false if obj }
+    end
     true
   end
 
@@ -167,6 +173,12 @@ module Enumerable
   def any_match?(regex)
     my_each { |x| return true if regex.match(x) }
     false
+  end
+
+  def matchers?(obj, pattern)
+    (obj.respond_to?(:eql?) && obj.eql?(pattern)) ||
+      (pattern.is_a?(Class) && obj.is_a?(pattern)) ||
+      (pattern.is_a?(Regexp) && pattern.match(obj))
   end
 end
 
