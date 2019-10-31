@@ -183,7 +183,7 @@ module Enumerable
 end
 
 def multiply_els(arr)
-  arr.my_inject { |product, current| product * current }
+  arr.my_inject(:*)
 end
 
 # rubocop:enable Metrics/PerceivedComplexity
