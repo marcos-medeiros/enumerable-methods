@@ -1,22 +1,78 @@
-### Enumerable Methods
+# Enumerable methods
 
-## Goal: 
+This project has as a goal the recreation of some of the methods provided by the
+[Enumerable](https://ruby-doc.org/core-2.6.3/Enumerable.html) module.
+Project instructions are in [The Odin Project](https://www.theodinproject.com/courses/ruby-programming/lessons/advanced-building-blocks#project-2-enumerable-methods).
 
-- Create enumerable methods from scratch
+## Methods provided
 
-## Done work:
+For every method emulated, just **prepend** `my_`
+to each of them, i.e, `my_each` would be the recreated version of the original `each`.
+The following is a list of the methods written from scratch with Ruby.
 
-- [x] Create my_each method
-- [x] Create my_each_with_index method
-- [x] Create my_select method
-- [x] Create my_all? method
-- [x] Create my_any? method
-- [x] Create my_none? method
-- [x] Create my_count method
-- [x] Create my_map  method
-- [x] Create my_inject method
-- [x] Create multiply_els method
+ - [x] `each`
+ - [x] `each_with_index`
+ - [x] `select`
+ - [x] `all?`
+ - [x] `any?`
+ - [x] `none?`
+ - [x] `count`
+ - [x] `map`
+ - [x] `inject`
 
-## Done by:
+## How to setup
 
-- [Marcos Medeiros](https://www.linkedin.com/in/marcos-medeiros-6a079a18a/)
+First of all, install the __Ruby__ interpreter, you can find the instructions of how to do this
+[here](https://www.theodinproject.com/courses/web-development-101/lessons/installing-ruby).
+
+After installing Ruby, __clone__ the repository and change your current directory to the one created after the cloning.
+
+```console
+$ git clone https://github.com/marcos-medeiros/enumerable-methods.git
+$ cd enumerable
+```
+
+## How to run the tests
+
+First, you'll need to install the [gem](https://en.wikipedia.org/wiki/RubyGems) __bundler__.
+This is required for installing the gems required for running the tests.
+
+```console
+$ gem install bundler
+```
+
+Make sure that your current directory is the one that corresponds to this repository on you local machine.
+
+Now, install the required gems for running the tests. The utility used for testing the methods
+is [RSpec](https://rspec.info/).
+
+```console
+$ bundle install
+```
+
+Run the tests!
+
+Run all the tests in general.
+
+```console
+$ rspec
+```
+
+Run a specific test.
+
+```console
+$ rspec spec/loops_spec.rb
+```
+
+Change the output format.
+
+```console
+$ rspec spec/misc_spec.rb --format p
+```
+
+Find more options available for the `rspec` command.
+
+```console
+$ rspec --help
+```
+
